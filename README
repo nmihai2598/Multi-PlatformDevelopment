@@ -1,0 +1,52 @@
+Negru Mihai-Vlad 332CB
+
+Tema 1 Multi-Platform Development
+
+Organizare
+	Am urmărit în realizrea temei crearea unui subset al directivelor de
+preprocesare specifice libajului C.
+	Programul parsează linie cu linie tratând fiecare caz.
+
+	în cazul salvării directivelor #define si a parametriilor primiti
+prin -D am utilizat o listă simplu înlănțuită având ca date un 
+	char *key, - salvez simbolul prin care este definită o anumită.  
+	char *keyP, - în cazul define-urilor care depind de alte define-uri
+					se salveaza simbolul define-ului de care depinde. 
+	char *value, - valoarea define-ului respectiv, modificată în cazul în 
+					care define-ul respectiv depinde de alt define. 
+	int bool  - tipul define-ului , string, integer, define
+
+	În cazul salvării directoarelor primite ca parametru la execuția
+programului este folosită tot o listă simplu înlănțuită in care salvez 
+doar calea primită ca parametru.
+
+	În cazul directivelor #include utilizez funcția care parcurge
+fișierul de input, apelată recursiv, această funcție parsează textul
+linie cu linie verificând dacă există directive pe liniile citite.
+Înainte de a fi apelată această funcție este căutat fișierul găsit in
+include in fiecare cale primita ca parametru si în directorul curent.
+
+	Condițiile date prin #if, #elif, #ifdef, #ifndef sunt verificate în
+felul următor:
+	-primele două parsează linia după apariția directivei înlocuind
+define-urile din linie cu valorile acestora, functia este utilizată și
+în cadrul verificarii liniilor din cod, se trimite fiecare pozitie din 
+linie catre functia Get_hash facând o copie a liniei si parsând cu strtok pentru a căuta dacă există cheile salvate în linie.
+	La sfârșitul înlocuirii se verifica dac valoarea este diferita de
+'0'
+	-în cazul ultimelor două se verifică prin functia Get_hash dacă
+există define-ul de după directivă în listă.
+
+	#endif este sarit în cazul în care condiția este adevarată și 
+este verificat dacă condiția nu este adevărată, această valoare de 
+adevăr este salvată într-o variabilă wr fiind 1 dacă scrie în continuare,
+sau 0 dacă nu
+	
+	#else dacă este găsit neagă variabila respectivă
+
+Implementare
+	Este implementată toată tema.
+
+Cum se compilează
+	Linux: gcc tema1.c -o so-cpp
+	Windows:  cl /MD tema1.c  /link /out:so-cpp.exe           
